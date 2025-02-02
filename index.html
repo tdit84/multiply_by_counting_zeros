@@ -153,8 +153,7 @@
         var wrong2 = nonzeroProduct * Math.pow(10, totalZeros - 1);
         if (wrong2 !== correctAnswer) choices.push(wrong2);
       } else {
-        // If no zeros, adjust the multiplication part.
-        var wrong2 = (nonzeroProduct + 1);
+        var wrong2 = nonzeroProduct + 1;
         if (wrong2 !== correctAnswer) choices.push(wrong2);
       }
       
@@ -162,7 +161,7 @@
       var wrong3 = ((digit1 + 1) * digit2) * Math.pow(10, totalZeros);
       if (wrong3 !== correctAnswer) choices.push(wrong3);
       
-      // If duplicates occur or less than 4 options, add a random near-miss.
+      // Ensure we have 4 unique choices.
       while (choices.length < 4) {
         var randomOffset = Math.floor(Math.random() * 5) - 2; // -2 to +2, excluding 0
         if (randomOffset === 0) continue;
@@ -172,11 +171,14 @@
         }
       }
       
-      shuffleArray(choices);
+      // Shuffle choices.
+      for (let i = choices.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [choices[i], choices[j]] = [choices[j], choices[i]];
+      }
       
       var choicesDiv = document.getElementById("choices");
       choicesDiv.innerHTML = "";
-      
       for (var i = 0; i < choices.length; i++) {
         var choice = choices[i];
         var btn = document.createElement("div");
@@ -221,16 +223,6 @@
       
       visualDiv.appendChild(box1);
       visualDiv.appendChild(box2);
-    }
-    
-    // Helper function to shuffle an array.
-    function shuffleArray(array) {
-      for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        var temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
-      }
     }
     
     window.onload = function() {
