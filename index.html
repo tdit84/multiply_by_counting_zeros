@@ -56,33 +56,11 @@
       display: inline-block;
       height: 24px;
     }
-    /* Visual container for the multiplication breakdown */
-    .visual {
-      margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-    }
-    .box {
-      border: 2px solid #333;
-      padding: 10px;
-      border-radius: 8px;
-      background-color: #fff;
-      width: 200px;
-    }
-    .box p {
-      margin: 8px 0;
-      font-size: 16px;
-    }
-    .box span {
-      font-weight: bold;
-    }
   </style>
 </head>
 <body>
   <h1>Multiply by Counting Zeros</h1>
   <div id="question"></div>
-  <div class="visual" id="visual"></div>
   <div class="choices" id="choices"></div>
   <div id="feedback">
     <span id="starCounter">⭐ 0</span>
@@ -97,7 +75,7 @@
     
     // Generates two factors for the multiplication game.
     // Each factor is created by choosing a nonzero digit (1-9) and appending a random number of zeros.
-    // To highlight the trick, we ensure that at least one factor has a trailing zero.
+    // At least one factor will have a trailing zero.
     function generateFactors() {
       var zeros1 = Math.floor(Math.random() * 4); // 0 to 3 zeros
       var zeros2 = Math.floor(Math.random() * 4); // 0 to 3 zeros
@@ -137,8 +115,6 @@
         "Calculate: " + factor1 + " × " + factor2 + "<br>" +
         "Hint: Multiply the nonzero parts (" + digit1 + " × " + digit2 + " = " + nonzeroProduct + ") " +
         "and then add " + totalZeros + " zero(s).";
-      
-      generateVisual(factor1, digit1, zeros1, factor2, digit2, zeros2);
       
       // Create choices: include the correct answer and three near misses.
       var choices = [];
@@ -202,27 +178,6 @@
         })(choice, correctAnswer);
         choicesDiv.appendChild(btn);
       }
-    }
-    
-    // Generates a visual breakdown of each factor.
-    function generateVisual(factor1, digit1, zeros1, factor2, digit2, zeros2) {
-      var visualDiv = document.getElementById("visual");
-      visualDiv.innerHTML = "";
-      
-      var box1 = document.createElement("div");
-      box1.className = "box";
-      box1.innerHTML = "<p>Factor 1: <span>" + factor1 + "</span></p>" +
-                       "<p>Nonzero part: <span>" + digit1 + "</span></p>" +
-                       "<p>Zeros: <span>" + zeros1 + "</span></p>";
-      
-      var box2 = document.createElement("div");
-      box2.className = "box";
-      box2.innerHTML = "<p>Factor 2: <span>" + factor2 + "</span></p>" +
-                       "<p>Nonzero part: <span>" + digit2 + "</span></p>" +
-                       "<p>Zeros: <span>" + zeros2 + "</span></p>";
-      
-      visualDiv.appendChild(box1);
-      visualDiv.appendChild(box2);
     }
     
     window.onload = function() {
